@@ -1,12 +1,13 @@
 import styled from "styled-components";
-import background from "./img/background.png";
+import background from "./img/bg.png";
 import { MainLayout } from "./styles/Layouts";
+import Navigation from "./Components/Navigation/Navigation";
 
 function App() {
   return (
     <AppStyled background={background} className="App">
       <MainLayout>
-        <h1>Hello</h1>
+        <Navigation />
       </MainLayout>
     </AppStyled>
   );
