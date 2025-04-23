@@ -12,7 +12,7 @@ exports.addExpense = async (req, res) => {
   });
 
   try {
-    if (!title || !category || !description || !date) {
+    if (!title || !category || !date) {
       return res.status(400).json({ message: 'Missing required fields!' });
     } else if (amount < 0 || !amount === 'number') {
       return res

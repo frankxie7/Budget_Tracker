@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import user from "../../img/user.png";
 import { menuItems } from "../../utils/menuitems";
-import { signout } from "../../utils/icons";
 
 function Navigation({ active, setActive }) {
   return (
@@ -11,7 +10,7 @@ function Navigation({ active, setActive }) {
         <img src={user} alt="" />
         <div className="text">
           <h2>Frank Xie</h2>
-          <p>Money</p>
+          <p>Personal Budget Tracker</p>
         </div>
       </div>
       <ul className="menu-items">
@@ -28,9 +27,6 @@ function Navigation({ active, setActive }) {
           );
         })}
       </ul>
-      <div className="bottom-nav">
-        <div>{signout} Sign Out</div>
-      </div>
     </NavStyled>
   );
 }
@@ -39,62 +35,78 @@ const NavStyled = styled.nav`
   padding: 2rem 1.5rem;
   width: 374px;
   height: 100%;
-  background: rgba(252, 246, 249, 0.78);
-  border: 3px solid #ffffff;
-  backdrop-filter: blur(4.5px);
-  border-radius: 32px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  backdrop-filter: blur(6px);
+  border-radius: 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 2rem;
+
   .user-sec {
     height: 100px;
     display: flex;
     align-items: center;
     gap: 1rem;
     img {
-      width: 80px;
-      height: 80px;
+      width: 72px;
+      height: 72px;
       border-radius: 50%;
       object-fit: cover;
-      background: #fcf6f9;
-      border: 2px solid #ffffff;
+      background: #ffffff;
+      border: 2px solid #e5e7eb;
       padding: 0.2rem;
-      box-shadow: 0px 1px 17px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.04);
     }
     h2 {
-      color: rgba(34, 34, 96, 1);
+      color: #1f2937;
+      font-size: 1.5rem;
+      font-weight: 600;
     }
     p {
-      color: rgba(34, 34, 96, 0.6);
+      color: #6b7280;
+      font-size: 0.9rem;
+      margin-top: 0.25rem;
     }
   }
+
   .menu-items {
     flex: 1;
     display: flex;
     flex-direction: column;
     li {
-      display: grid;
-      grid-template-columns: 40px auto;
+      display: flex;
       align-items: center;
-      margin: 0.6rem 0;
+      gap: 1rem;
+      margin: 0.8rem 0;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.4s ease-in-out;
-      color: rgba(34, 34, 96, 0.6);
-      padding-left: 1rem;
+      transition: all 0.3s ease;
+      color: #6b7280;
+      padding: 0.8rem 1rem;
+      border-radius: 12px;
       position: relative;
+
+      &:hover {
+        background: #e0f2fe;
+        color: #1f2937;
+      }
+
       i {
-        color: rgba(34, 34, 96, 0.6);
-        font-size: 1.4rem;
-        transition: all 0.4s ease-in-out;
+        color: inherit;
+        font-size: 1.5rem;
+        transition: all 0.3s ease;
       }
     }
   }
+
   .active {
-    color: rgba(34, 34, 96, 1) !important;
+    background: #dbeafe;
+    color: #1d4ed8 !important;
+    font-weight: 600;
     i {
-      color: rgba(34, 34, 96, 1) !important;
+      color: #1d4ed8 !important;
     }
     &::before {
       content: "";
@@ -103,8 +115,8 @@ const NavStyled = styled.nav`
       top: 0;
       width: 4px;
       height: 100%;
-      background: #222260;
-      border-radius: 0 10px 10px 0;
+      background: #3b82f6;
+      border-radius: 0 8px 8px 0;
     }
   }
 `;
