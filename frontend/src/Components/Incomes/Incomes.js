@@ -54,7 +54,13 @@ const IncomesStyled = styled.div`
   color: #2c3e50;
 
   h1 {
-    color: #3c4f63;
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #eab308; /* Darker, richer yellow */
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    letter-spacing: 1px;
+    transition: transform 0.3s ease;
   }
 
   .total-income {

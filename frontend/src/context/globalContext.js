@@ -11,18 +11,22 @@ export const GlobalProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   const addIncome = async (income) => {
-    const response = await axios
-      .post(`${BASE_URL}add-income`, income)
-      .catch((err) => {
-        setError(err.response.data.message);
-      });
-    getIncomes();
+    try {
+      await axios.post(`${BASE_URL}add-income`, income);
+      getIncomes();
+    } catch (err) {
+      setError(err.response?.data?.message || "An error occurred");
+    }
   };
 
   const getIncomes = async () => {
-    const response = await axios.get(`${BASE_URL}get-income`);
-    setIncomes(response.data);
-    console.log(response.data);
+    try {
+      const { data } = await axios.get(`${BASE_URL}get-income`);
+      setIncomes(data);
+      console.log(data);
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to load incomes");
+    }
   };
 
   const deleteIncome = async (id) => {
@@ -30,36 +34,33 @@ export const GlobalProvider = ({ children }) => {
       await axios.delete(`${BASE_URL}delete-income/${id}`);
       getIncomes();
     } catch (err) {
-      if (err.response && err.response.data && err.response.data.message) {
-        setError(err.response.data.message);
-      } else {
-        setError("Woah, slow it down.");
-      }
+      setError(
+        err.response?.data?.message || "An error occurred while deleting income"
+      );
       console.error("Delete income error:", err.message);
     }
   };
 
-  const totalIncome = () => {
-    let totalIncome = 0;
-    incomes.forEach((income) => {
-      totalIncome = totalIncome + income.amount;
-    });
+  const totalIncome = () =>
+    incomes.reduce((total, income) => total + income.amount, 0);
 
-    return totalIncome;
-  };
-  const addExpense = async (income) => {
-    const response = await axios
-      .post(`${BASE_URL}add-expense`, income)
-      .catch((err) => {
-        setError(err.response.data.message);
-      });
-    getExpenses();
+  const addExpense = async (expense) => {
+    try {
+      await axios.post(`${BASE_URL}add-expense`, expense);
+      getExpenses();
+    } catch (err) {
+      setError(err.response?.data?.message || "An error occurred");
+    }
   };
 
   const getExpenses = async () => {
-    const response = await axios.get(`${BASE_URL}get-expense`);
-    setExpenses(response.data);
-    console.log(response.data);
+    try {
+      const { data } = await axios.get(`${BASE_URL}get-expense`);
+      setExpenses(data);
+      console.log(data);
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to load expenses");
+    }
   };
 
   const deleteExpense = async (id) => {
@@ -67,35 +68,24 @@ export const GlobalProvider = ({ children }) => {
       await axios.delete(`${BASE_URL}delete-expense/${id}`);
       getExpenses();
     } catch (err) {
-      if (err.response && err.response.data && err.response.data.message) {
-        setError(err.response.data.message);
-      } else {
-        setError("Woah, slow it down.");
-      }
+      setError(
+        err.response?.data?.message ||
+          "An error occurred while deleting expense"
+      );
       console.error("Delete expense error:", err.message);
     }
   };
 
-  const totalExpenses = () => {
-    let totalIncome = 0;
-    expenses.forEach((income) => {
-      totalIncome = totalIncome + income.amount;
-    });
+  const totalExpenses = () =>
+    expenses.reduce((total, expense) => total + expense.amount, 0);
 
-    return totalIncome;
-  };
-
-  const totalBalance = () => {
-    return totalIncome() - totalExpenses();
-  };
+  const totalBalance = () => totalIncome() - totalExpenses();
 
   const transactionHistory = () => {
     const history = [...incomes, ...expenses];
-    history.sort((a, b) => {
-      return new Date(b.date) - new Date(a.date);
-    });
-
-    return history.slice(0, 3);
+    return history
+      .sort((a, b) => new Date(b.date) - new Date(a.date))
+      .slice(0, 3);
   };
 
   return (
@@ -122,6 +112,4 @@ export const GlobalProvider = ({ children }) => {
   );
 };
 
-export const useGlobalContext = () => {
-  return useContext(GlobalContext);
-};
+export const useGlobalContext = () => useContext(GlobalContext);
